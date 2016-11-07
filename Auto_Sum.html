@@ -1,0 +1,32 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script type="text/javascript">
+function getTime(){
+	var hours=0, minutes=0, Finaltime=0, finalHours=0, finalMinites=0;
+	$("#fieldset_B29 input[type=text]").each(function(){
+		if ($(this).attr('id').length==7) {
+			hours += parseInt($(this).val(), 10) > 0 ? parseInt($(this).val(), 10):0;
+		} else if ($(this).attr('id').length==8) {
+			minutes += parseInt($(this).val(), 10) > 0 ? parseInt($(this).val(), 10):0;
+		}
+	});
+	
+	Finaltime = parseInt(hours)*60 + parseInt(minutes);
+	finalHours = Math.round(Finaltime/60);
+	finalMinites = Finaltime%60;
+	return {
+		finalHours:finalHours,
+		finalMinites:finalMinites
+	}
+}
+
+$(document).ready(function(){
+	var pipeTotaTime=0;
+	var Time = setInterval(function(){
+		pipeTotaTime = getTime();
+		$("#totalTime").text(pipeTotaTime.finalHours+"hours & "+pipeTotaTime.finalMinites+" minutes");
+	}, 5000);
+
+	$("#fieldset_B29 table tr:last").after("<tr><td>Total Hours</td><td id='totalTime' colspan=2 style='width:180px;text-align:center;padding-top:20px;'></td></tr>");
+
+});
+</script>
